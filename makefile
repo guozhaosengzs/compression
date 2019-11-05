@@ -8,17 +8,20 @@ DEPFILES:=$(SOURCES:.cpp=.d)
 
 .PHONY : all
 
-all: compressor
+all: compress uncompress
 
 .PHONY : clean
 
 CXX_FLAGS = -g -std=c++11 -Wall -Werror
 
 clean: 
-	rm -rf compressor ${OBJECTS}
+	rm -rf compress uncompress ${OBJECTS}
 
-compressor: main.cpp ${OBJECTS} makefile
-	g++ $(CXX_FLAGS) ${OBJECTS} main.cpp -o $@
+compress: compress.cpp ${OBJECTS} makefile
+	g++ $(CXX_FLAGS) ${OBJECTS} compress.cpp -o $@
+
+uncompress: uncompress.cpp ${OBJECTS} makefile
+	g++ $(CXX_FLAGS) ${OBJECTS} uncompress.cpp -o $@
 
 $(OBJECTS): %.o: %.cpp %.h %.d makefile
 	g++ $(CXX_FLAGS) -c $< -o $@
