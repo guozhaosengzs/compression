@@ -14,7 +14,7 @@ all: compress uncompress
 
 CXX_FLAGS = -g -std=c++11 -Wall -Werror
 
-clean: 
+clean:
 	rm -rf compress uncompress ${OBJECTS}
 
 compress: compress.cpp ${OBJECTS} makefile

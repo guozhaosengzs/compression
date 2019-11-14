@@ -1,10 +1,10 @@
-/** 
+/**
     Coding Assignment 4: Compression
     uncompress.cpp
-    November 5, 2019
+    November 22, 2019
 
-    @author <your name>
-    @collaboration
+    @author Zhaosen Guo
+    @collaboration Program skeleton by Darren Strash
 */
 
 #include <iostream>
