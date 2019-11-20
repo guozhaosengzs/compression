@@ -20,7 +20,7 @@ public:
     void set_char(unsigned char const character);
     void set_freq(int const freq);
 
-    void become_root(TreeNode* lc_ptr, TreeNode* rc_ptr));
+    void become_parent(TreeNode* lc_ptr, TreeNode* rc_ptr));
     void set_parent(TreeNode* p_ptr);
     void set_l_child(TreeNode* lc_ptr);
     void set_r_child(TreeNode* rc_ptr);

@@ -29,11 +29,11 @@ void TreeNode::set_freq(int const freq) {
 }
 
 /***/
-void TreeNode::become_root(TreeNode* lc_ptr, TreeNode* rc_ptr)) {
+void TreeNode::become_parent(TreeNode* lc_ptr, TreeNode* rc_ptr)) {
     set_l_child(lc_ptr);
     set_r_child(rc_ptr);
-    lc_ptr->set_parent(*this); //????
-    rc_ptr->set_parent(*this);
+    lc_ptr->set_parent(this);
+    rc_ptr->set_parent(this);
 }
 
 /***/
@@ -54,7 +54,7 @@ void TreeNode::set_r_child(TreeNode* rc_ptr) {
 /***/
 void TreeNode::find_path() {
     string bottom_top_path{};
-    TreeNode *current_root = *this; //???
+    TreeNode *current_root = this;
 
     while (current_root->get_parent() != nullptr) {
         TreeNode *temp = current_root;
