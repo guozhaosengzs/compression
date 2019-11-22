@@ -21,14 +21,14 @@ public:
     void set_freq(int const freq);
 
     void become_parent(TreeNode* lc_ptr, TreeNode* rc_ptr);
-    void set_parent(TreeNode* p_ptr);
-    void set_l_child(TreeNode* lc_ptr);
-    void set_r_child(TreeNode* rc_ptr);
-    void navigate();
+    void set_parent   (TreeNode* p_ptr);
+    void set_l_child  (TreeNode* lc_ptr);
+    void set_r_child  (TreeNode* rc_ptr);
 
+    void navigate();
+    string get_path()           const;
     unsigned char get_char()    const;
     int get_freq()              const;
-    string get_path()           const;
     TreeNode* get_parent()      const;
     TreeNode* get_l_child()     const;
     TreeNode* get_r_child()     const;

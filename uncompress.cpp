@@ -15,14 +15,18 @@
 
 using namespace std;
 
-/***/
+/**
+    Rebuilds the Huffman tree based on input characters,
+    recurse till no posible branches.
+
+    @param Ifstream by reference.
+    @return pointer to the root node.
+*/
 TreeNode* rebuild_tree(ifstream &inf_stream) {
     if (inf_stream.get() == 'I') {
         TreeNode *root = new TreeNode();
-
         root->set_l_child(rebuild_tree(inf_stream));
         root->set_r_child(rebuild_tree(inf_stream));
-        //root->become_parent(rebuild_tree(inf_stream), rebuild_tree(inf_stream));
         return root;
     }
     else {
@@ -33,7 +37,12 @@ TreeNode* rebuild_tree(ifstream &inf_stream) {
     }
 }
 
-/***/
+/**
+    Loads one character from input, convert it to string with 0 & 1 expression.
+
+    @param Ifstream by reference.
+    @param Buffer string by reference.
+*/
 void refill_buffer(ifstream &inf_stream, string &buffer){
     unsigned char eight_bits = inf_stream.get();
     for (int id = 7; id >= 0; id--) {
@@ -48,7 +57,13 @@ void refill_buffer(ifstream &inf_stream, string &buffer){
     }
 }
 
-/***/
+/**
+    Navigate in the Huffman tree by reading directions from buffer string.
+
+    @param Ifstream by reference.
+    @param A pointer that initially points to the tree root.
+    @param Buffer string with information to navigate in the tree, by reference.
+*/
 unsigned char traverse(ifstream &inf_stream, TreeNode *ptr, string &buffer) {
     while ((ptr->get_l_child() != nullptr) | (ptr->get_r_child()!= nullptr)) {
         if (buffer.size() < 1) {
@@ -65,8 +80,14 @@ unsigned char traverse(ifstream &inf_stream, TreeNode *ptr, string &buffer) {
     return ptr->get_char();
 }
 
+/**
+    Reads the rest of the compressed file and write them out decoded.
 
-/***/
+    @param Ifsteam by reference.
+    @param Ofsteam by reference.
+    @param File length to read.
+    @param A pointer to the root of Huffman tree.
+*/
 void read_to_uncompress(ifstream &inf_stream, ofstream &of_stream,
     size_t file_remain_len, TreeNode *root) {
     string buffer;
@@ -74,13 +95,16 @@ void read_to_uncompress(ifstream &inf_stream, ofstream &of_stream,
     while (file_remain_len > 0) {
         TreeNode *ptr = root;
         unsigned char ch = traverse(inf_stream, ptr, buffer);
-        cout << int(ch);
         of_stream << ch;
-
         file_remain_len--;
     }
 }
 
+/**
+    Recursive function to delete the tree under a given root.
+
+    @param A pointer acting as the current root of the tree to be delete.
+*/
 void delete_tree(TreeNode *node) {
     if (!node) {
         return;
@@ -91,7 +115,7 @@ void delete_tree(TreeNode *node) {
 }
 
 /**
-    decompress encoded text from a given input file to a given
+    Decompresses encoded text from a given input file to a given
     output file
 
     @param argc the number of command-line arguments

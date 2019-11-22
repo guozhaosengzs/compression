@@ -16,7 +16,12 @@
 
 using namespace std;
 
-/***/
+/**
+    Reads file to collect character frequency, then make corresponding nodes.
+
+    @param Ifsteam by reference.
+    @param An array of TreeNode pointers by reference.
+*/
 void make_tree_nodes(ifstream &in_file_stream, TreeNode* (&nodes_array)[256]) {
     int char_freq [256] = {};
     unsigned char character = in_file_stream.get();
@@ -36,23 +41,23 @@ void make_tree_nodes(ifstream &in_file_stream, TreeNode* (&nodes_array)[256]) {
     }
 }
 
-/***/
+/**
+    Makes a Huffman tree based on a heap priority queue.
+
+    @param The array of TreeNode pointers by reference.
+    @return A pointer to the very root of the Huffman tree.
+*/
 TreeNode* make_huffman_tree(TreeNode* (&nodes_array)[256]) {
     Heap p_queue;
     for (int ind = 0; ind < 256; ind++) {
-        // unsigned char character = (unsigned char) ind;
-        //cout << character << ".....looped...." << endl;
         if (nodes_array[ind]) {
             p_queue.add(nodes_array[ind]);
-        //    cout << "Added " << nodes_array[ind]->get_char() << " with " <<
-            // nodes_array[ind]->get_freq() << endl;
         }
     }
 
     while (p_queue.get_size() > 1) {
         TreeNode *smallest_node_1 = p_queue.remove();
         TreeNode *smallest_node_2 = p_queue.remove();
-        cout << smallest_node_1->get_char() << "----"<<smallest_node_1->get_freq() << "|||"<<smallest_node_2->get_char() << "----"<<smallest_node_2->get_freq() << endl;
         TreeNode *new_node = new TreeNode();
         new_node->become_parent(smallest_node_1, smallest_node_2);
         p_queue.add(new_node);
@@ -60,7 +65,12 @@ TreeNode* make_huffman_tree(TreeNode* (&nodes_array)[256]) {
     return p_queue.remove();
 }
 
-/***/
+/**
+    Coverts Huffman tree into a string representation.
+
+    @param The pointer to the root of Huffman tree.
+    @param The string to store the transformation, passed by reference.
+*/
 void encode_huffman_tree(TreeNode *root, string &encoded_tree) {
     if (root == nullptr) {
         return;
@@ -78,7 +88,12 @@ void encode_huffman_tree(TreeNode *root, string &encoded_tree) {
     }
 }
 
-/***/
+/**
+    Upon recieving a string of eight 0 & 1s, converts it to a true 8 bits char.
+
+    @param The string needed to be converted.
+    @return A unsigned char type data.
+*/
 unsigned char bit_coversion(string str) {
     unsigned char eight_bits = 0;
     for (int id = 7; id >= 0; id--) {
@@ -90,7 +105,15 @@ unsigned char bit_coversion(string str) {
     return eight_bits;
 }
 
-/***/
+/**
+    Reads the input file again, write encoded the tree, file length, and
+    true bits representation of file contents to the compressed file.
+
+    @param Ifsteam by reference.
+    @param Ofsteam by reference.
+    @param A pointer to the root of the Huffman tree.
+    @param The array of TreeNode pointers by reference.
+*/
 void read_to_compress(ifstream &in_file_stream, ofstream &out_file_stream,
     TreeNode *root, TreeNode* (&nodes_array)[256]) {
 
@@ -98,18 +121,12 @@ void read_to_compress(ifstream &in_file_stream, ofstream &out_file_stream,
     for (int index = 0; index < 256; index++) {
         if (nodes_array[index]) {
             file_length += nodes_array[index]->get_freq();
-            nodes_array[index]->navigate();
-            TreeNode *test = nodes_array[index]; //
-            unsigned char character = (unsigned char) index;
-            cout << test->get_char() << "------" << character << "------" << index << "------" << test->get_path() <<endl; //
+            nodes_array[index]->navigate(); //find out their paths in the tree
         }
     }
     string encoded_tree;
     encode_huffman_tree(root, encoded_tree);
     out_file_stream << encoded_tree << file_length;
-
-    cout << "file_length " << file_length << endl;
-    cout << encoded_tree << endl;
 
     string buffer;
     unsigned char character = in_file_stream.get();
@@ -126,7 +143,11 @@ void read_to_compress(ifstream &in_file_stream, ofstream &out_file_stream,
     out_file_stream << bit_coversion(buffer.append(8 - buffer.size(), '0'));
 }
 
-/***/
+/**
+    Recursive function to delete the tree under a given root.
+
+    @param A pointer acting as the current root of the tree to be delete.
+*/
 void delete_tree(TreeNode *node) {
     if (!node) {
         return;
@@ -137,12 +158,11 @@ void delete_tree(TreeNode *node) {
 }
 
 /**
-    compress text from a given input file to a given
-    output file
+    compress text from a given input file to a given output file.
 
-    @param argc the number of command-line arguments
-    @param argv an array of command-line-arguments
-    @return an error code
+    @param argc the number of command-line arguments.
+    @param argv an array of command-line-arguments.
+    @return an error code.
 */
 int main(int argc, char **argv) {
     if (argc != 3) {
@@ -172,7 +192,6 @@ int main(int argc, char **argv) {
 
     in_file_stream.close();
     out_file_stream.close();
-
     delete_tree(huffman_root);
 
     return 0;

@@ -11,40 +11,71 @@
 
 using namespace std;
 
-/***/
+/**
+    The constructor of a Heap class.
+*/
 Heap::Heap() {
     _size = 0;
-    for (int index; index < 256; index++) {
+    for (int index = 0; index < 256; index++) {
         _array[index] = nullptr;
     }
 }
 
-/***/
+/**
+    Provides the actual size of the heap.
+
+    @return An integer representing the size.
+*/
 int Heap::get_size() const{
     return _size;
 }
 
-/***/
+/**
+    Provides the index of the left child for the given index,
+
+    @param An int index.
+    @return the index of the left child.
+*/
 int Heap::get_left(int const index) const {
     return (2 * index) + 1;
 }
 
-/***/
+/**
+    Provides the index of the right child for the given index,
+
+    @param An int index.
+    @return the index of the right child.
+*/
 int Heap::get_right(int const index) const {
     return (2 * index) + 2;
 }
 
-/***/
+/**
+    Provides the index of the parent for the given index,
+
+    @param An int index.
+    @return the index of the parent.
+*/
 int Heap::get_parent(int const index) const {
     return (index - 1) / 2;
 }
 
-/***/
+/**
+    Calculates the differences in frequencies between the two TreeNode object.
+
+    @param A pointer for TreeNode object.
+    @param A pointer for TreeNode object.
+*/
 int Heap::get_freq_diff(int const index_a, int const index_b) const {
     return (_array[index_a]->get_freq() - _array[index_b]->get_freq());
 }
 
-/***/
+/**
+    Swaps the two object on the given index.
+
+    @param An int index.
+    @param An int index.
+*/
 void Heap::switch_order(int const index_a, int const index_b) {
     TreeNode *temp_prt;
     temp_prt = _array[index_b];
@@ -52,13 +83,22 @@ void Heap::switch_order(int const index_a, int const index_b) {
     _array[index_a] = temp_prt;
 }
 
-/***/
+/**
+    Adds a new object to Heap.
+
+    @param A pointer to the TreeNode to add.
+*/
 void Heap::add(TreeNode *node_ptr) {
     _array[_size++] = node_ptr;
     bubble_up(_size - 1);
 }
 
-/***/
+/**
+    If the object on the given index is violating the Heap rule (less than its
+    parent), then send it up the chain.
+
+    @param An index for the object in question.
+*/
 void Heap::bubble_up(int current_index) {
     int parent = get_parent(current_index);
     while (current_index > 0 && get_freq_diff(current_index, parent) < 0) {
@@ -68,7 +108,11 @@ void Heap::bubble_up(int current_index) {
     }
 }
 
-/***/
+/**
+    Removes the top of the heap.
+
+    @return A pointer to the removed TreeNode object.
+*/
 TreeNode* Heap::remove() {
     TreeNode *smallest = _array[0];
     _array[0] = _array[--_size];
@@ -78,7 +122,12 @@ TreeNode* Heap::remove() {
     return smallest;
 }
 
-/***/
+/**
+    If the object on the given index is violating the Heap rule (greater than
+    its children), then send it down.
+
+    @param An index for the object in question.
+*/
 void Heap::trickle_down(int current_index) {
     do {
         int target_index = -1;
