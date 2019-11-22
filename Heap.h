@@ -6,10 +6,8 @@
     @author Zhaosen Guo
 */
 
-#ifndef HEAP_H
-#define HEAP_H
+#include "TreeNode.h"
 
-// include TreeNode?
 using namespace std;
 
 class Heap {
@@ -31,7 +29,4 @@ public:
 private:
     TreeNode *_array[256];
     int _size;
-
 };
-
-#endif // TREENODE_H

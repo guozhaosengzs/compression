@@ -1,5 +1,6 @@
 #Add more sources by including additional lines of the format:
-#SOURCES += ClassName.cpp
+SOURCES += Heap.cpp
+SOURCES += TreeNode.cpp
 
 OBJECTS=$(SOURCES:.cpp=.o)
 

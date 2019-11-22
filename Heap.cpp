@@ -7,6 +7,7 @@
 */
 
 #include "Heap.h"
+#include "TreeNode.h"
 
 using namespace std;
 
@@ -24,12 +25,12 @@ int Heap::get_size() const{
 }
 
 /***/
-int Heap::get_left(int const index) const{
+int Heap::get_left(int const index) const {
     return (2 * index) + 1;
 }
 
 /***/
-int Heap::get_right(int i) const {
+int Heap::get_right(int const index) const {
     return (2 * index) + 2;
 }
 
@@ -40,7 +41,7 @@ int Heap::get_parent(int const index) const {
 
 /***/
 int Heap::get_freq_diff(int const index_a, int const index_b) const {
-    return _array[index_a]->get_freq - _array[index_b]->get_freq;
+    return (_array[index_a]->get_freq() - _array[index_b]->get_freq());
 }
 
 /***/
@@ -53,7 +54,7 @@ void Heap::switch_order(int const index_a, int const index_b) {
 
 /***/
 void Heap::add(TreeNode *node_ptr) {
-    _array[_size++] = node_ptr; //? change size? put it in then add?
+    _array[_size++] = node_ptr;
     bubble_up(_size - 1);
 }
 
@@ -68,14 +69,13 @@ void Heap::bubble_up(int current_index) {
 }
 
 /***/
-TreeNode* Heap::remove() { //delete bottom necessary?
+TreeNode* Heap::remove() {
     TreeNode *smallest = _array[0];
-    _array[0] = _array[--_size]; // ? same question as add
+    _array[0] = _array[--_size];
     _array[_size] = nullptr;
 
-    trickleDown(0);
+    trickle_down(0);
     return smallest;
-    }
 }
 
 /***/
