@@ -1,10 +1,10 @@
 /**
-    Coding Assignment 4: Compression
+    Compression - uncompress 
     uncompress.cpp
     November 22, 2019
 
     @author Zhaosen Guo
-    @collaboration Program skeleton by Darren Strash
+    @collaboration Darren Strash
 */
 
 #include "TreeNode.h"
