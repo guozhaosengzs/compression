@@ -1,4 +1,4 @@
-# compression
+# Compression
 Compress and uncompress text files using Huffman tree and Min Heap
 
 ## Commands
