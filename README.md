@@ -4,7 +4,7 @@ Compress and uncompress text files using Huffman tree and Min Heap
 ## Commands
 Please use 
 
- ./compress source.txt source.txt.z \\
+ ./compress source.txt source.txt.z        and 
  ./uncompress source.txt.z copy_of_source.txt
  
  to compress and uncompress text files.
