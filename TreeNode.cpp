@@ -1,5 +1,5 @@
 /**
-    Coding Assignment 4: Compression
+    Compression
     TreeNode.cpp
     November 22, 2019
 
